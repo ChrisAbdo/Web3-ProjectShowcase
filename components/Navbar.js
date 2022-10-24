@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = ({ Web3Handler, account }) => {
   // use effect to make id=dropdown-menu have an animation of fading in from the top, pure css
   useEffect(() => {
     const dropdownMenu = document.getElementById("dropdown-menu");
@@ -103,12 +103,22 @@ const Navbar = () => {
           </div>
         </div>
         <div className="navbar-end">
-          <a href="#_" className="relative inline-block px-4 py-2  group">
+          <a
+            onClick={Web3Handler}
+            href="#_"
+            className="relative inline-block px-4 py-2  group"
+          >
             <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#6AB313] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
             <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#6AB313]"></span>
-            <span className="relative text-black group-hover:text-black ">
-              Connect Wallet
-            </span>
+            {account ? (
+              <span className="relative text-black group-hover:text-black ">
+                {account.slice(0, 5) + "..." + account.slice(-4)}
+              </span>
+            ) : (
+              <span className="relative text-black group-hover:text-black ">
+                Connect Wallet
+              </span>
+            )}
           </a>
         </div>
       </div>
