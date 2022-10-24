@@ -208,7 +208,7 @@ const LandingPage = () => {
               the Stem Marketplace to earn a quick payout.
             </p>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-center">
               <a
                 href="/create-and-list-nft"
                 className="relative inline-block px-4 py-2  group w-full text-center items-center justify-center"

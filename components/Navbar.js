@@ -33,11 +33,11 @@ const Navbar = () => {
               className="shadow menu dropdown-content bg-black rounded-box  text-white w-32"
             >
               <li>
-                <a>Item 1</a>
+                <a href="/marketplace">Marketplace</a>
               </li>
 
               <li>
-                <a>Item 3</a>
+                <a href="/create-and-list-nft">Create and List NFT</a>
               </li>
             </ul>
           </div>
