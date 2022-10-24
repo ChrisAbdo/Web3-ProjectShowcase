@@ -1,15 +1,13 @@
 import Web3 from "web3";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
 
 import Marketplace from "../backend/build/contracts/Marketplace.json";
 import NFT from "../backend/build/contracts/NFT.json";
 
-const myAssets = () => {
+const CreatorDashboard = () => {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
-  const router = useRouter();
 
   useEffect(() => {
     loadNFTs();
@@ -18,35 +16,37 @@ const myAssets = () => {
   async function loadNFTs() {
     const web3 = new Web3(window.ethereum);
     const networkId = await web3.eth.net.getId();
+
+    // Get listed NFTs
     const marketPlaceContract = new web3.eth.Contract(
       Marketplace.abi,
       Marketplace.networks[networkId].address
     );
-    const NFTContractAddress = NFT.networks[networkId].address;
-    const NFTContract = new web3.eth.Contract(NFT.abi, NFTContractAddress);
     const accounts = await web3.eth.getAccounts();
-    const data = await marketPlaceContract.methods
-      .getMyNfts()
+    const listings = await marketPlaceContract.methods
+      .getMyListedNfts()
       .call({ from: accounts[0] });
-
+    // Iterate over my listed NFTs and retrieve their metadata
     const nfts = await Promise.all(
-      data.map(async (i) => {
+      listings.map(async (i) => {
         try {
+          const NFTContract = new web3.eth.Contract(
+            NFT.abi,
+            NFT.networks[networkId].address
+          );
           const tokenURI = await NFTContract.methods.tokenURI(i.tokenId).call();
           const meta = await axios.get(tokenURI);
-          let nft = {
+          let item = {
             price: i.price,
             supply: i.supply,
             tokenId: i.tokenId,
             seller: i.seller,
-            owner: i.buyer,
+            owner: i.owner,
             image: meta.data.image,
             name: meta.data.name,
             description: meta.data.description,
-
-            tokenURI: tokenURI,
           };
-          return nft;
+          return item;
         } catch (err) {
           console.log(err);
           return null;
@@ -56,15 +56,10 @@ const myAssets = () => {
     setNfts(nfts.filter((nft) => nft !== null));
     setLoadingState("loaded");
   }
-
-  function listNFT(nft) {
-    router.push(`/resell-nft?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`);
-  }
-
   return (
     <div>
       <div className="flex justify-center items-center mb-4 mt-4">
-        <div className="text-4xl font-bold text-center">My Owned Stems</div>
+        <div className="text-4xl font-bold text-center">My Listed Stems</div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 pt-4  w-full  py-6 px-6">
@@ -149,7 +144,7 @@ const myAssets = () => {
               </div>
             </div>
 
-            <div className="p-4 border-t-[2px] border-black">
+            {/* <div className="p-4 border-t-[2px] border-black">
               <a
                 onClick={() => listNFT(nft)}
                 className="relative inline-block px-4 py-2  group w-full cursor-pointer  text-center"
@@ -180,7 +175,7 @@ const myAssets = () => {
                   </span>
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
@@ -188,4 +183,4 @@ const myAssets = () => {
   );
 };
 
-export default myAssets;
+export default CreatorDashboard;

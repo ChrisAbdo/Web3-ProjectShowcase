@@ -122,7 +122,13 @@ const marketplace = () => {
   }
 
   async function buyNft(nft) {
-    const notification = toast.loading("Buying Stem...");
+    // const notification = toast.loading("Buying Stem...");
+    // black border toast notification
+    const notification = toast.loading("Buying Stem...", {
+      style: {
+        border: "2px solid #000",
+      },
+    });
 
     try {
       const web3 = new Web3(window.ethereum);
@@ -143,6 +149,29 @@ const marketplace = () => {
     } catch (err) {
       console.log(err);
       toast.error("Error buying Stem", {
+        id: notification,
+      });
+    }
+  }
+
+  async function tipCreator() {
+    const notification = toast.loading("Tipping Creator...");
+    try {
+      const web3 = new Web3(window.ethereum);
+
+      const accounts = await web3.eth.getAccounts();
+      await web3.eth.sendTransaction({
+        from: accounts[0],
+        to: nfts.seller,
+        value: web3.utils.toWei("0.1", "Ether"),
+      });
+      toast.success("Creator tipped! ", {
+        id: notification,
+      });
+      loadNFTs();
+    } catch (err) {
+      console.log(err);
+      toast.error("Error tipping creator", {
         id: notification,
       });
     }
@@ -174,13 +203,15 @@ const marketplace = () => {
                       {Web3.utils.fromWei(nft.price, "ether")} MATIC
                     </p> */}
             <div className="flex justify-center items-center mt-4 mb-2">
-              <div className="text-4xl font-bold text-center">Marketplace</div>
+              <div className="text-4xl font-bold text-center">
+                Stem Marketplace
+              </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 pt-4  w-full  py-6 px-6">
               {nfts.map((nft, i) => (
                 <div
                   key={i}
-                  className="border-[2px] border-black shadow overflow-hidden hover:scale-[1.03] transform transition duration-500 ease-in-out"
+                  className="border-[2px] border-black shadow overflow-hidden hover:scale-[1.03] transform transition duration-500 ease-in-out mb-4"
                 >
                   <figure className="flex items-center justify-center  w-full">
                     <audio
@@ -272,6 +303,28 @@ const marketplace = () => {
                         Purchase Stem
                       </span>
                     </a>
+                    <div className="flex gap-2 text-center mt-4">
+                      <a
+                        onClick={tipCreator}
+                        className="relative inline-block px-4 py-2  group w-full text-center items-center justify-center cursor-pointer"
+                      >
+                        <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#ffc900] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
+                        <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#ffc900]"></span>
+                        <span className="relative text-black group-hover:text-black ">
+                          Tip Creator
+                        </span>
+                      </a>
+                      <a
+                        href="/marketplace"
+                        className="relative inline-block px-4 py-2  group w-full text-center items-center justify-center"
+                      >
+                        <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#ff90e8] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
+                        <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#ff90e8]"></span>
+                        <span className="relative text-black group-hover:text-black ">
+                          Report
+                        </span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               ))}

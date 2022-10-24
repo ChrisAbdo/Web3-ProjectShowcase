@@ -30,14 +30,23 @@ const Navbar = ({ Web3Handler, account }) => {
             <ul
               id="dropdown-menu"
               tabIndex={0}
-              className="shadow menu dropdown-content bg-black rounded-box  text-white w-32"
+              className="shadow menu dropdown-content bg-black rounded-box  text-white w-52"
             >
+              <li>
+                <a href="/">Home</a>
+              </li>
               <li>
                 <a href="/marketplace">Marketplace</a>
               </li>
 
               <li>
                 <a href="/create-and-list-nft">Create and List NFT</a>
+              </li>
+              <li>
+                <a href="/my-listed-nfts">Listed Stems</a>
+              </li>
+              <li>
+                <a href="/my-nfts">Owned Stems</a>
               </li>
             </ul>
           </div>
@@ -92,7 +101,7 @@ const Navbar = ({ Web3Handler, account }) => {
               Owned Stems
             </a>
             <a
-              href="#"
+              href="/my-listed-nfts"
               className="hidden md:block relative before:content-[''] before:absolute before:block before:w-full before:h-[1px] 
               before:bottom-0 before:left-0 before:bg-black
               before:hover:scale-x-100 before:scale-x-0 before:origin-top-left
