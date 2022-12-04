@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const Navbar = ({ Web3Handler, account }) => {
   // use effect to make id=dropdown-menu have an animation of fading in from the top, pure css
   useEffect(() => {
-    const dropdownMenu = document.getElementById("dropdown-menu");
-    dropdownMenu.classList.add("animate-fade-in-down");
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    dropdownMenu.classList.add('animate-fade-in-down');
   }, []);
   return (
     <>
@@ -44,9 +44,6 @@ const Navbar = ({ Web3Handler, account }) => {
               </li>
               <li>
                 <a href="/my-listed-nfts">Listed Stems</a>
-              </li>
-              <li>
-                <a href="/my-nfts">Owned Stems</a>
               </li>
             </ul>
           </div>
@@ -91,15 +88,7 @@ const Navbar = ({ Web3Handler, account }) => {
             >
               Create Stem
             </a>
-            <a
-              href="/my-nfts"
-              className="hidden md:block relative before:content-[''] before:absolute before:block before:w-full before:h-[1px] 
-              before:bottom-0 before:left-0 before:bg-black
-              before:hover:scale-x-100 before:scale-x-0 before:origin-top-left
-              before:transition before:ease-in-out before:duration-300"
-            >
-              Owned Stems
-            </a>
+
             <a
               href="/my-listed-nfts"
               className="hidden md:block relative before:content-[''] before:absolute before:block before:w-full before:h-[1px] 
@@ -121,7 +110,7 @@ const Navbar = ({ Web3Handler, account }) => {
             <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#6AB313]"></span>
             {account ? (
               <span className="relative text-black group-hover:text-black ">
-                {account.slice(0, 5) + "..." + account.slice(-4)}
+                {account.slice(0, 5) + '...' + account.slice(-4)}
               </span>
             ) : (
               <span className="relative text-black group-hover:text-black ">

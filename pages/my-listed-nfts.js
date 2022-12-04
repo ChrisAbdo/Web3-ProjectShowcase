@@ -1,13 +1,13 @@
-import Web3 from "web3";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import Web3 from 'web3';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import Marketplace from "../backend/build/contracts/Marketplace.json";
-import NFT from "../backend/build/contracts/NFT.json";
+import Marketplace from '../backend/build/contracts/Marketplace.json';
+import NFT from '../backend/build/contracts/NFT.json';
 
 const CreatorDashboard = () => {
   const [nfts, setNfts] = useState([]);
-  const [loadingState, setLoadingState] = useState("not-loaded");
+  const [loadingState, setLoadingState] = useState('not-loaded');
 
   useEffect(() => {
     loadNFTs();
@@ -37,8 +37,6 @@ const CreatorDashboard = () => {
           const tokenURI = await NFTContract.methods.tokenURI(i.tokenId).call();
           const meta = await axios.get(tokenURI);
           let item = {
-            price: i.price,
-            supply: i.supply,
             tokenId: i.tokenId,
             seller: i.seller,
             owner: i.owner,
@@ -54,7 +52,7 @@ const CreatorDashboard = () => {
       })
     );
     setNfts(nfts.filter((nft) => nft !== null));
-    setLoadingState("loaded");
+    setLoadingState('loaded');
   }
   return (
     <div>
@@ -97,85 +95,6 @@ const CreatorDashboard = () => {
                 <span className="badge">instrument</span>
               </p>
             </div>
-
-            {/* <div className="stats shadow border-t-[2px] border-black w-full rounded-none">
-                    <div className="stat place-items-center border-r-[2px] border-black">
-                      <div className=" font-bold">Price</div>
-                      <div className="stat-value">
-                        {Web3.utils.fromWei(nft.price, "ether")}
-                      </div>
-                      <div className=" font-bold text-black">MATIC</div>
-                    </div>
-
-                    <div className="stat place-items-center">
-                      <div className="font-bold">Supply</div>
-                      <div className="stat-value text-secondary">
-                        {nft.supply}
-                      </div>
-                      <div className="font-bold">LEFT</div>
-                    </div>
-
-                    <div className="stat place-items-center border-l-[2px] border-black">
-                      <div className="font-bold">Royalty Share</div>
-                      <div className="stat-value">{nft.royalty}%</div>
-                      <div className="font-bold">PERCENT</div>
-                    </div>
-                  </div> */}
-            {/* do the code above but fix the border issue with the one next to royalty share not being 2px */}
-            <div className="stats shadow border-t-[2px] border-black w-full rounded-none">
-              <div className="stat place-items-center border-r-[2px] border-black">
-                <div className=" font-bold">Price</div>
-                <div className="stat-value">
-                  {Web3.utils.fromWei(nft.price, "ether")}
-                </div>
-                <div className=" font-bold text-black">MATIC</div>
-              </div>
-
-              <div className="stat place-items-center">
-                <div className="font-bold">Supply</div>
-                <div className="stat-value text-secondary">{nft.supply}</div>
-                <div className="font-bold">LEFT</div>
-              </div>
-
-              <div className="stat place-items-center border-l-[2px] border-black">
-                <div className="font-bold">Royalty</div>
-                <div className="stat-value">{nft.royalty}%</div>
-                <div className="font-bold">PERCENT</div>
-              </div>
-            </div>
-
-            {/* <div className="p-4 border-t-[2px] border-black">
-              <a
-                onClick={() => listNFT(nft)}
-                className="relative inline-block px-4 py-2  group w-full cursor-pointer  text-center"
-              >
-                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#6AB313] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
-                <span className="absolute inset-0 w-full h-full bg-white border-[2px] border-black group-hover:bg-[#6AB313]"></span>
-
-                <span className="relative text-black group-hover:text-black ">
-                  Resell Stem
-                </span>
-              </a>
-              <div className="flex gap-2 text-center mt-4">
-                <a className="relative inline-block px-4 py-2  group w-full text-center items-center justify-center cursor-pointer">
-                  <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#ffc900] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
-                  <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#ffc900]"></span>
-                  <span className="relative text-black group-hover:text-black ">
-                    Tip Creator
-                  </span>
-                </a>
-                <a
-                  href="/marketplace"
-                  className="relative inline-block px-4 py-2  group w-full text-center items-center justify-center"
-                >
-                  <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#ff90e8] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
-                  <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#ff90e8]"></span>
-                  <span className="relative text-black group-hover:text-black ">
-                    Report
-                  </span>
-                </a>
-              </div>
-            </div> */}
           </div>
         ))}
       </div>

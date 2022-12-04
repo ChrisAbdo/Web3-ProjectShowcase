@@ -1,26 +1,23 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-import toast from "react-hot-toast";
-import axios from "axios";
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
-import Web3 from "web3";
-import Marketplace from "../backend/build/contracts/Marketplace.json";
-import NFT from "../backend/build/contracts/NFT.json";
+import Web3 from 'web3';
+import Marketplace from '../backend/build/contracts/Marketplace.json';
+import NFT from '../backend/build/contracts/NFT.json';
 
 const createItem = () => {
-  const [account, setAccount] = useState("");
+  const [account, setAccount] = useState('');
   const [loading, setLoading] = useState(true);
   const [web3, setWeb3] = useState(null);
   const [nfts, setNfts] = useState([]);
-  const [loadingState, setLoadingState] = useState("not-loaded");
+  const [loadingState, setLoadingState] = useState('not-loaded');
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, updateFormInput] = useState({
-    price: "",
-    supply: "",
-    royalty: "",
-    name: "",
-    description: "",
+    name: '',
+    description: '',
   });
   const router = useRouter();
 
@@ -28,15 +25,15 @@ const createItem = () => {
     loadBlockchainData();
   }, [account]);
 
-  const ipfsClient = require("ipfs-http-client");
-  const projectId = "2FdliMGfWHQCzVYTtFlGQsknZvb";
-  const projectSecret = "2274a79139ff6fdb2f016d12f713dca1";
+  const ipfsClient = require('ipfs-http-client');
+  const projectId = '2FdliMGfWHQCzVYTtFlGQsknZvb';
+  const projectSecret = '2274a79139ff6fdb2f016d12f713dca1';
   const auth =
-    "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+    'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
   const client = ipfsClient.create({
-    host: "ipfs.infura.io",
+    host: 'ipfs.infura.io',
     port: 5001,
-    protocol: "https",
+    protocol: 'https',
     headers: {
       authorization: auth,
     },
@@ -63,13 +60,13 @@ const createItem = () => {
       console.log(url);
       setFileUrl(url);
     } catch (error) {
-      console.log("Error uploading file: ", error);
+      console.log('Error uploading file: ', error);
     }
   }
 
   async function uploadToIPFS() {
-    const { name, description, price, supply, royalty } = formInput;
-    if (!name || !description || !price || !supply || !royalty || !fileUrl) {
+    const { name, description } = formInput;
+    if (!name || !description || !fileUrl) {
       return;
     } else {
       // first, upload metadata to IPFS
@@ -84,7 +81,7 @@ const createItem = () => {
         // after metadata is uploaded to IPFS, return the URL to use it in the transaction
         return url;
       } catch (error) {
-        console.log("Error uploading file: ", error);
+        console.log('Error uploading file: ', error);
       }
     }
   }
@@ -95,12 +92,12 @@ const createItem = () => {
     // );
     // custom toast notification with black border 2px
     const notification = toast.loading(
-      "Make sure to confirm both transactions!",
+      'Make sure to confirm both transactions!',
       {
         style: {
-          border: "2px solid #000",
+          border: '2px solid #000',
           // make bold
-          fontWeight: "bold",
+          fontWeight: 'bold',
         },
       }
     );
@@ -115,7 +112,7 @@ const createItem = () => {
       // do the code above but do not use web3Modal
       const web3 = new Web3(window.ethereum);
       const provider = await window.ethereum.request({
-        method: "eth_requestAccounts",
+        method: 'eth_requestAccounts',
       });
       const url = await uploadToIPFS();
       const networkId = await web3.eth.net.getId();
@@ -128,46 +125,39 @@ const createItem = () => {
         Marketplace.abi,
         Marketplace.networks[networkId].address
       );
-      let listingFee = await marketPlaceContract.methods.getListingFee().call();
-      listingFee = listingFee.toString();
+
       setLoading(true);
       NFTContract.methods
         .mint(url)
         .send({ from: accounts[0] })
-        .on("receipt", function (receipt) {
-          console.log("minted");
+        .on('receipt', function (receipt) {
+          console.log('minted');
           // List the NFT
           const tokenId = receipt.events.NFTMinted.returnValues[0];
           marketPlaceContract.methods
-            .listNft(
-              NFTContractAddress,
-              tokenId,
-              Web3.utils.toWei(formInput.price, "ether"),
-              formInput.supply,
-              formInput.royalty
-            )
-            .send({ from: accounts[0], value: listingFee })
-            .on("receipt", function () {
-              console.log("listed");
+            .listNft(NFTContractAddress, tokenId)
+            .send({ from: accounts[0] })
+            .on('receipt', function () {
+              console.log('listed');
               // toast.success("Stem created", { id: notification });
               // create a custom toast that has a black border 2px
-              toast.success("NFT listed", {
+              toast.success('NFT listed', {
                 id: notification,
                 style: {
-                  border: "2px solid #000",
+                  border: '2px solid #000',
                 },
               });
 
               setLoading(false);
               // wait 2 seconds, then reload the page
               setTimeout(() => {
-                router.push("/marketplace");
+                router.push('/marketplace');
               }, 2000);
             });
         });
     } catch (error) {
       console.log(error);
-      toast.error("Error creating stem", { id: notification });
+      toast.error('Error creating stem', { id: notification });
     }
   }
 
@@ -241,51 +231,7 @@ const createItem = () => {
                   }
                 />
               </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Supply</span>
-                </label>
-                <input
-                  type="number"
-                  placeholder="Stem Supply"
-                  className="input border-black"
-                  onChange={(e) =>
-                    updateFormInput({ ...formInput, supply: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Royalty Split %</span>
-                </label>
-                <input
-                  type="number"
-                  placeholder="Stem Royalty Split %"
-                  className="input border-black"
-                  onChange={(e) =>
-                    updateFormInput({ ...formInput, royalty: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Price</span>
-                </label>
 
-                <label className="input-group">
-                  <input
-                    type="text"
-                    placeholder="0.01"
-                    className="input border-black w-full"
-                    onChange={(e) =>
-                      updateFormInput({ ...formInput, price: e.target.value })
-                    }
-                  />
-                  <span className="border-black border-t border-r border-b">
-                    MATIC
-                  </span>
-                </label>
-              </div>
               <div className="form-control mt-6">
                 <div
                   onClick={listNFTForSale}
