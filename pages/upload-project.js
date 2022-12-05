@@ -99,7 +99,13 @@ const createItem = () => {
 
   async function listNFTForSale() {
     if (formInput.description.length < 100) {
-      toast.error('Description must be at least 100 characters long');
+      toast.error('Description must be at least 100 characters long', {
+        style: {
+          border: '2px solid #000',
+          // make bold
+          fontWeight: 'bold',
+        },
+      });
       return;
     }
     const notification = toast.loading(
@@ -107,8 +113,7 @@ const createItem = () => {
       {
         style: {
           border: '2px solid #000',
-          // make bold
-          fontWeight: 'bold',
+          className: 'text',
         },
       }
     );
@@ -165,7 +170,7 @@ const createItem = () => {
   }
 
   return (
-    <div>
+    <div className="text">
       <div className="flex justify-center items-center mb-4 mt-4">
         <div className="text-4xl font-bold text-center">Upload Project</div>
       </div>
@@ -258,7 +263,7 @@ const createItem = () => {
               />
             </div>
 
-            <div className="form-control mt-6">
+            {/* <div className="form-control mt-6">
               {account ? (
                 <div
                   onClick={listNFTForSale}
@@ -273,6 +278,35 @@ const createItem = () => {
               ) : (
                 <div></div>
               )}
+            </div> */}
+            <div className="form-control mt-6">
+              <a
+                onClick={listNFTForSale}
+                class="text cursor-pointer relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium  transition duration-300 ease-out border-2 border-primary rounded-full shadow-md group"
+              >
+                <span class="absolute inset-0 flex items-center justify-center w-full h-full  duration-300 -translate-x-full  group-hover:translate-x-0 ease">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                    />
+                  </svg>
+                </span>
+
+                <span class="absolute flex items-center justify-center w-full h-full  transition-all duration-300 transform group-hover:translate-x-full ease">
+                  Upload Project
+                </span>
+
+                <span class="relative invisible">Button Text</span>
+              </a>
             </div>
           </div>
         </div>

@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
 
-      <div data-theme={darkMode ? 'lofi' : 'black'} className="min-h-screen">
+      <div data-theme={darkMode ? 'black' : 'lofi'} className="min-h-screen">
         <Navbar
           Web3Handler={Web3Handler}
           account={account}
