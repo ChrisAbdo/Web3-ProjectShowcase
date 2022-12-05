@@ -94,7 +94,7 @@ const marketplace = () => {
   }
 
   return (
-    <div>
+    <div className="text">
       <div>
         <div className="flex justify-center items-center mt-4 mb-2">
           <div className="text-4xl  text-center">Project Showcase</div>

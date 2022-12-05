@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const Navbar = ({ Web3Handler, account, toggleDarkMode }) => {
   return (
     <>
@@ -40,7 +42,6 @@ const Navbar = ({ Web3Handler, account, toggleDarkMode }) => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">ProjectsXYZ</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <img
@@ -113,13 +114,13 @@ const Navbar = ({ Web3Handler, account, toggleDarkMode }) => {
               <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
             </svg>
           </label>
-          <a
+          {/* <a
             onClick={Web3Handler}
             href="#_"
             className="relative inline-block px-4 py-2  group"
           >
             <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#6AB313] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
-            <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#6AB313]"></span>
+            <span className="absolute inset-0 w-full h-full  border-2 border-black group-hover:bg-[#6AB313]"></span>
             {account ? (
               <span className="relative text-black group-hover:text-black ">
                 {account.slice(0, 5) + '...' + account.slice(-4)}
@@ -129,6 +130,25 @@ const Navbar = ({ Web3Handler, account, toggleDarkMode }) => {
                 Connect Wallet
               </span>
             )}
+          </a> */}
+          <a
+            onClick={Web3Handler}
+            class="cursor-pointer relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium  transition duration-300 ease-out border-2 border-primary rounded-full shadow-md group"
+          >
+            <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full  group-hover:translate-x-0 ease">
+              {/* use /metamask.svg */}
+              <Image src="/metamask.svg" width={20} height={20} />
+            </span>
+            {account ? (
+              <span class="absolute flex items-center justify-center w-full h-full  transition-all duration-300 transform group-hover:translate-x-full ease">
+                {account.slice(0, 5) + '...' + account.slice(-4)}
+              </span>
+            ) : (
+              <span class="absolute flex items-center justify-center w-full h-full  transition-all duration-300 transform group-hover:translate-x-full ease">
+                Connect Wallet
+              </span>
+            )}
+            <span class="relative invisible">Button Text</span>
           </a>
         </div>
       </div>

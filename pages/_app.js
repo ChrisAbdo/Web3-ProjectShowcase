@@ -26,6 +26,11 @@ function MyApp({ Component, pageProps }) {
       }
     };
     loadWeb3();
+
+    // event listener for when metamask account changes
+    window.ethereum.on('accountsChanged', (accounts) => {
+      setAccount(accounts[0]);
+    });
   }, []);
 
   const Web3Handler = async () => {
