@@ -1,11 +1,4 @@
-import { useEffect } from 'react';
-
 const Navbar = ({ Web3Handler, account }) => {
-  // use effect to make id=dropdown-menu have an animation of fading in from the top, pure css
-  useEffect(() => {
-    const dropdownMenu = document.getElementById('dropdown-menu');
-    dropdownMenu.classList.add('animate-fade-in-down');
-  }, []);
   return (
     <>
       <div className="navbar  border-black border-b-[2px] sticky top-0 z-50 bg-white">
@@ -36,7 +29,7 @@ const Navbar = ({ Web3Handler, account }) => {
                 <a href="/">Home</a>
               </li>
               <li>
-                <a href="/marketplace">Marketplace</a>
+                <a href="/project-showcase">Projects</a>
               </li>
 
               <li>
@@ -71,32 +64,32 @@ const Navbar = ({ Web3Handler, account }) => {
               Home
             </a>
             <a
-              href="/marketplace"
+              href="/project-showcase"
               className="hidden md:block relative before:content-[''] before:absolute before:block before:w-full before:h-[1px] 
               before:bottom-0 before:left-0 before:bg-black
               before:hover:scale-x-100 before:scale-x-0 before:origin-top-left
               before:transition before:ease-in-out before:duration-300"
             >
-              Marketplace
+              Project Showcase
             </a>
             <a
-              href="/create-and-list-nft"
+              href="/upload-project"
               className="hidden md:block relative before:content-[''] before:absolute before:block before:w-full before:h-[1px] 
               before:bottom-0 before:left-0 before:bg-black
               before:hover:scale-x-100 before:scale-x-0 before:origin-top-left
               before:transition before:ease-in-out before:duration-300"
             >
-              Create Stem
+              Upload Project
             </a>
 
             <a
-              href="/my-listed-nfts"
+              href="/profile"
               className="hidden md:block relative before:content-[''] before:absolute before:block before:w-full before:h-[1px] 
               before:bottom-0 before:left-0 before:bg-black
               before:hover:scale-x-100 before:scale-x-0 before:origin-top-left
               before:transition before:ease-in-out before:duration-300"
             >
-              Listed Stems
+              Profile
             </a>
           </div>
         </div>
