@@ -95,49 +95,59 @@ const marketplace = () => {
   return (
     <div>
       <div>
-        <div className="drawer drawer-mobile fixed">
-          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content flex flex-col items-center mt-2 ">
-            <div className="flex justify-center items-center mt-4 mb-2">
-              <div className="text-4xl font-bold text-center">
-                Project Showcase
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-20">
-              {nfts.map((nft, i) => (
-                <div
-                  key={i}
-                  className="border-[2px] border-black shadow overflow-hidden hover:scale-[1.03] transform transition duration-500 ease-in-out mb-4"
-                >
-                  <Image src={nft.image} width={300} height={300} />
+        <div className="flex justify-center items-center mt-4 mb-2">
+          <div className="text-4xl font-bold text-center">Project Showcase</div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-20">
+          {nfts.map((nft, i) => (
+            <div
+              key={i}
+              className="border-[2px] border-primary  shadow overflow-hidden hover:scale-[1.03] transform transition duration-500 ease-in-out mb-4"
+            >
+              <Image
+                src={nft.image}
+                width={300}
+                height={300}
+                className="bg-white"
+              />
 
-                  <div className="p-4 space-y-2">
-                    <p className="text-2xl font-semibold">{nft.name}</p>
+              <div className="p-4 space-y-2">
+                <p className="text-2xl font-semibold truncate">{nft.name}</p>
 
-                    <p className="">
-                      <span className="font-semibold">Description: </span>
-                      {nft.description}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Uploaded by: </span>
-                      {nft.seller.slice(0, 5)}...
-                      {nft.seller.slice(-4)}
-                    </p>
-                    <p className="space-x-2">
-                      {/* <Link href="/[slug]" as={`/${nft.tokenId}`}>
+                <p className="">
+                  <span className="font-semibold ">Description: </span>
+                  {/* {nft.description} */}
+                  {/* descriptino but limit it to 50 characters */}
+                  {nft.description.length > 100
+                    ? nft.description.substring(0, 100) + '...'
+                    : nft.description}
+                </p>
+                <p>
+                  <span className="font-semibold">Uploaded by: </span>
+                  {nft.seller.slice(0, 5)}...
+                  {nft.seller.slice(-4)}
+                </p>
+                <p className="space-x-2">
+                  {/* <Link href="/[slug]" as={`/${nft.tokenId}`}>
                         <a className="text-blue-500">View</a>
                       </Link> */}
-                      <Link href="/[slug]" as={`/${nft.tokenId}`}>
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-                          View
-                        </button>
-                      </Link>
-                    </p>
-                  </div>
-                </div>
-              ))}
+                  <Link href="/[slug]" as={`/${nft.tokenId}`}>
+                    <a
+                      href="#_"
+                      className="relative inline-block px-4 py-2  group w-full text-center"
+                    >
+                      <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#CAFFBF] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
+                      <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#CAFFBF]"></span>
+
+                      <span className="relative text-black group-hover:text-black ">
+                        View Project
+                      </span>
+                    </a>
+                  </Link>
+                </p>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

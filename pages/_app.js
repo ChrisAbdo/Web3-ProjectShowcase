@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import { useEffect, useState } from 'react';
+import useDarkMode from '../hooks/useDarkMode';
 
 import Navbar from '../components/Navbar';
 
@@ -9,6 +10,8 @@ import toast, { Toaster } from 'react-hot-toast';
 function MyApp({ Component, pageProps }) {
   const [account, setAccount] = useState('');
   const [web3, setWeb3] = useState(null);
+
+  const { darkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const loadWeb3 = async () => {
@@ -49,9 +52,15 @@ function MyApp({ Component, pageProps }) {
   };
   return (
     <>
-      <Navbar Web3Handler={Web3Handler} account={account} />
-      <Component {...pageProps} />
-      <Toaster />
+      <div data-theme={darkMode ? 'lofi' : 'black'} className="min-h-screen">
+        <Navbar
+          Web3Handler={Web3Handler}
+          account={account}
+          toggleDarkMode={toggleDarkMode}
+        />
+        <Component {...pageProps} />
+        <Toaster />
+      </div>
     </>
   );
 }

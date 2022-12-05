@@ -2,22 +2,20 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import toast from 'react-hot-toast';
-import axios from 'axios';
 
 import Web3 from 'web3';
 import Marketplace from '../backend/build/contracts/Marketplace.json';
 import NFT from '../backend/build/contracts/NFT.json';
-import Image from 'next/image';
 
 const createItem = () => {
   const [account, setAccount] = useState('');
   const [loading, setLoading] = useState(true);
-
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, updateFormInput] = useState({
     name: '',
     description: '',
   });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -86,6 +84,10 @@ const createItem = () => {
   }
 
   async function listNFTForSale() {
+    if (formInput.description.length < 100) {
+      toast.error('Description must be at least 100 characters long');
+      return;
+    }
     const notification = toast.loading(
       'Make sure to confirm both transactions!',
       {
@@ -151,9 +153,7 @@ const createItem = () => {
   return (
     <div>
       <div className="flex justify-center items-center mb-4 mt-4">
-        <div className="text-4xl font-bold text-center">
-          Publish Your First Stem
-        </div>
+        <div className="text-4xl font-bold text-center">Upload Project</div>
       </div>
       {/* two columns that split the page in a 30% 70% manner, 1 column per row in mobile view */}
       <div className="grid grid-cols-1 md:grid-cols-3 border-black min-h-screen">
@@ -169,7 +169,7 @@ const createItem = () => {
                 </label>
 
                 <input
-                  className="file-input border border-black"
+                  className="file-input border border-primary"
                   id="file_input"
                   type="file"
                   onChange={onChange}
@@ -182,8 +182,8 @@ const createItem = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Stem Title"
-                  className="input border-black"
+                  placeholder="Project Title"
+                  className="input border-primary"
                   onChange={(e) =>
                     updateFormInput({ ...formInput, name: e.target.value })
                   }
@@ -191,12 +191,15 @@ const createItem = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Description</span>
+                  <span className="label-text">
+                    Description | 100 Character Minimum
+                    <span className="text-red-500">*</span>
+                  </span>
                 </label>
                 <input
                   type="text"
-                  placeholder="Stem Description"
-                  className="input border-black"
+                  placeholder="Project Description"
+                  className="input border-primary"
                   onChange={(e) =>
                     updateFormInput({
                       ...formInput,
@@ -214,7 +217,7 @@ const createItem = () => {
                   <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#6AB313] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
                   <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#6AB313]"></span>
                   <span className="relative text-black group-hover:text-black text-center flex flex-col">
-                    Create Stem
+                    Upload Project
                   </span>
                 </div>
               </div>

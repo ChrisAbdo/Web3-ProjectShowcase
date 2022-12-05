@@ -96,16 +96,104 @@ export default function ProjectShowcase() {
 
   return (
     <div>
-      {/* find the nft tokenID respective to the slug and display the information */}
       {nfts.map((nft) => {
         if (nft.tokenId === slug) {
           return (
             <div>
-              <h1>
-                {nft.name} - {nft.tokenId}
-              </h1>
-              <Image src={nft.image} width={500} height={500} />
-              <p>{nft.description}</p>
+              {/* Section for 2 images to be on the same row. They should have a border and have a good gap between */}
+              <div className="hero  bg-base-200 ">
+                <div className="hero-content flex-col lg:flex-row-reverse">
+                  <div className="card flex-shrink-0 w-full max-w-sm px-4 py-4 ">
+                    <div className="card-body">
+                      <h2 className="text-center">
+                        More images coming soon!
+                        <progress className="progress w-56"></progress>
+                      </h2>
+                    </div>
+                  </div>
+                  <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 border border-primary px-4 py-4">
+                    <Image
+                      src={nft.image}
+                      width={700}
+                      height={500}
+                      className="bg-white"
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* Section for the description of the project */}
+              <div className="hero bg-base-200 px-4">
+                <div className="hero-content flex-col lg:flex-row-reverse ">
+                  <div className="card bg-base-100 shadow-xl border border-primary">
+                    <figure className="mt-6">
+                      <Image
+                        src={nft.image}
+                        width={300}
+                        height={300}
+                        className="bg-white"
+                      />
+                    </figure>
+                    <div className="card-body">
+                      <h2 className="card-title truncate">{nft.name}</h2>
+                      <h2 className="card-title text-sm truncate">
+                        Uploaded by: {nft.seller.substring(0, 5)}...
+                        {nft.seller.substring(38, 42)}
+                      </h2>
+                      <div className="card-actions justify-end">
+                        <div className="badge badge-outline">SOFTWARE</div>
+                        <div className="badge badge-outline">ETHEREUM</div>
+                        <div className="badge badge-outline">POLYGON</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h1 className="text-5xl font-bold">{nft.name}</h1>
+
+                    <h2 className="text-xl font-semibold mt-6">
+                      Project Description
+                    </h2>
+                    <p className="max-w-3xl">{nft.description}</p>
+
+                    <div className="flex space-x-4 mt-4">
+                      <a
+                        href="#_"
+                        className="relative inline-block px-4 py-2  group"
+                      >
+                        <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#abc4ff] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
+                        <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#abc4ff]"></span>
+
+                        <span className="relative text-black group-hover:text-black ">
+                          Live Demo
+                        </span>
+                      </a>
+                      <a
+                        href="#_"
+                        className="relative inline-block px-4 py-2  group"
+                      >
+                        <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#f6ac69] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
+                        <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#f6ac69]"></span>
+
+                        <span className="relative text-black group-hover:text-black ">
+                          Source Code
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hero bg-base-200">
+                <div className="hero-content text-center">
+                  <div className="max-w-md">
+                    <h1 className="text-5xl font-bold">Want to invest?</h1>
+                    <p className="py-6">
+                      If you would like to become an investor in this project,
+                      please contact: PLACEHOLDER
+                    </p>
+                    <button className="btn btn-primary">Get Started</button>
+                  </div>
+                </div>
+              </div>
             </div>
           );
         }
