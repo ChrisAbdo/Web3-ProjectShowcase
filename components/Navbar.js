@@ -1,7 +1,7 @@
 const Navbar = ({ Web3Handler, account, toggleDarkMode }) => {
   return (
     <>
-      <div className="navbar  border-primary border-b-[2px] sticky top-0 z-50 bg-base-100">
+      <div className="text navbar  border-primary border-b-[2px] sticky top-0 z-50 bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -94,7 +94,7 @@ const Navbar = ({ Web3Handler, account, toggleDarkMode }) => {
           </div>
         </div>
         <div className="navbar-end">
-          <label className="swap swap-rotate">
+          <label className="swap swap-rotate mr-2">
             <input type="checkbox" onClick={toggleDarkMode} />
 
             <svg

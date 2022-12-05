@@ -1,17 +1,27 @@
 import Web3 from 'web3';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import toast from 'react-hot-toast';
 import Marketplace from '../backend/build/contracts/Marketplace.json';
 import NFT from '../backend/build/contracts/NFT.json';
 
-const CreatorDashboard = () => {
+const CreatorDashboard = ({ account }) => {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState('not-loaded');
 
   useEffect(() => {
     loadNFTs();
-  }, []);
+    if (!account) {
+      toast.error('Please connect your wallet to continue', {
+        style: {
+          border: '2px solid #000',
+          // make bold
+          fontWeight: 'bold',
+        },
+      });
+      return;
+    }
+  }, [account]);
 
   async function loadNFTs() {
     const web3 = new Web3(window.ethereum);
@@ -57,7 +67,9 @@ const CreatorDashboard = () => {
   return (
     <div>
       <div className="flex justify-center items-center mb-4 mt-4">
-        <div className="text-4xl font-bold text-center">My Listed Stems</div>
+        <div className="text-4xl font-bold text-center">
+          My Current Projects
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 pt-4  w-full  py-6 px-6">

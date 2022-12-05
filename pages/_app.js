@@ -7,6 +7,8 @@ import Navbar from '../components/Navbar';
 import Web3 from 'web3';
 import toast, { Toaster } from 'react-hot-toast';
 
+import { motion } from 'framer-motion';
+
 function MyApp({ Component, pageProps }) {
   const [account, setAccount] = useState('');
   const [web3, setWeb3] = useState(null);
@@ -58,8 +60,18 @@ function MyApp({ Component, pageProps }) {
           account={account}
           toggleDarkMode={toggleDarkMode}
         />
-        <Component {...pageProps} />
-        <Toaster />
+        <motion.div
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: 'tween', ease: 'easeOut', duration: 1 }}
+          variants={{
+            hover: { scale: 0.9 },
+            press: { scale: 0.8 },
+          }}
+        >
+          <Component {...pageProps} />
+          <Toaster />
+        </motion.div>
       </div>
     </>
   );

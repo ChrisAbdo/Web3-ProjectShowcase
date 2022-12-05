@@ -23,6 +23,8 @@ export default function ProjectShowcase() {
   const [formInput, updateFormInput] = useState({
     name: '',
     description: '',
+    livedemo: '',
+    sourcecode: '',
   });
 
   useEffect(() => {
@@ -82,7 +84,11 @@ export default function ProjectShowcase() {
             image: meta.data.image,
             name: meta.data.name,
             description: meta.data.description,
+            livedemo: meta.data.livedemo,
+            sourcecode: meta.data.sourcecode,
           };
+
+          console.log(nft);
           return nft;
         } catch (err) {
           console.log(err);
@@ -97,7 +103,7 @@ export default function ProjectShowcase() {
   return (
     <div>
       {nfts.map((nft) => {
-        if (nft.tokenId === slug) {
+        if (nft.name === slug) {
           return (
             <div>
               {/* Section for 2 images to be on the same row. They should have a border and have a good gap between */}
@@ -156,8 +162,10 @@ export default function ProjectShowcase() {
 
                     <div className="flex space-x-4 mt-4">
                       <a
-                        href="#_"
-                        className="relative inline-block px-4 py-2  group"
+                        onClick={() => {
+                          window.open(nft.livedemo, '_blank');
+                        }}
+                        className="relative inline-block px-4 py-2  group cursor-pointer"
                       >
                         <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#abc4ff] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
                         <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#abc4ff]"></span>
@@ -167,8 +175,10 @@ export default function ProjectShowcase() {
                         </span>
                       </a>
                       <a
-                        href="#_"
-                        className="relative inline-block px-4 py-2  group"
+                        onClick={() => {
+                          window.open(nft.sourcecode, '_blank');
+                        }}
+                        className="relative inline-block px-4 py-2  group cursor-pointer"
                       >
                         <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-[#f6ac69] group-hover:-translate-x-0 group-hover:-translate-y-0 border-black border-[2px]"></span>
                         <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-[#f6ac69]"></span>

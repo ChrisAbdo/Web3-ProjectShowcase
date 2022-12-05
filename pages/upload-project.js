@@ -14,12 +14,24 @@ const createItem = () => {
   const [formInput, updateFormInput] = useState({
     name: '',
     description: '',
+    livedemo: '',
+    sourcecode: '',
   });
 
   const router = useRouter();
 
   useEffect(() => {
     loadBlockchainData();
+    if (!account) {
+      toast.error('Please connect your wallet to continue', {
+        style: {
+          border: '2px solid #000',
+          // make bold
+          fontWeight: 'bold',
+        },
+      });
+      return;
+    }
   }, [account]);
 
   const ipfsClient = require('ipfs-http-client');
@@ -62,14 +74,16 @@ const createItem = () => {
   }
 
   async function uploadToIPFS() {
-    const { name, description } = formInput;
-    if (!name || !description || !fileUrl) {
+    const { name, description, livedemo, sourcecode } = formInput;
+    if (!name || !description || !livedemo || !sourcecode || !fileUrl) {
       return;
     } else {
       // first, upload metadata to IPFS
       const data = JSON.stringify({
         name,
         description,
+        livedemo,
+        sourcecode,
         image: fileUrl,
       });
       try {
@@ -156,60 +170,96 @@ const createItem = () => {
         <div className="text-4xl font-bold text-center">Upload Project</div>
       </div>
       {/* two columns that split the page in a 30% 70% manner, 1 column per row in mobile view */}
-      <div className="grid grid-cols-1 md:grid-cols-3 border-black min-h-screen">
-        {/* right column */}
-        <div className="col-span-2 py-3 px-3">
-          <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100 border-black border-[2px]">
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">
-                    File | Acceptable Types: JPG, PNG, WEBP
-                  </span>
-                </label>
 
-                <input
-                  className="file-input border border-primary"
-                  id="file_input"
-                  type="file"
-                  onChange={onChange}
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Title</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Project Title"
-                  className="input border-primary"
-                  onChange={(e) =>
-                    updateFormInput({ ...formInput, name: e.target.value })
-                  }
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">
-                    Description | 100 Character Minimum
-                    <span className="text-red-500">*</span>
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Project Description"
-                  className="input border-primary"
-                  onChange={(e) =>
-                    updateFormInput({
-                      ...formInput,
-                      description: e.target.value,
-                    })
-                  }
-                />
-              </div>
+      <div className="px-12">
+        <div className="card flex-shrink-0 w-full shadow-2xl bg-base-100 border-primary border-[2px]">
+          <div className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">
+                  File | Acceptable Types: JPG, PNG, WEBP
+                </span>
+              </label>
 
-              <div className="form-control mt-6">
+              <input
+                className="file-input border border-primary"
+                id="file_input"
+                type="file"
+                onChange={onChange}
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Title</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Project Title"
+                className="input border-primary"
+                onChange={(e) =>
+                  updateFormInput({ ...formInput, name: e.target.value })
+                }
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">
+                  Description | 100 Character Minimum
+                  <span className="text-red-500">*</span>
+                </span>
+              </label>
+              <input
+                type="text"
+                placeholder="Project Description"
+                className="input border-primary"
+                onChange={(e) =>
+                  updateFormInput({
+                    ...formInput,
+                    description: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">
+                  Live Demo URL | https:// format
+                </span>
+              </label>
+              <input
+                type="text"
+                placeholder="https://"
+                className="input border-primary"
+                onChange={(e) =>
+                  updateFormInput({
+                    ...formInput,
+                    livedemo: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">
+                  Source Code URL | https:// format
+                </span>
+              </label>
+              <input
+                type="text"
+                placeholder="https://"
+                className="input border-primary"
+                onChange={(e) =>
+                  updateFormInput({
+                    ...formInput,
+                    sourcecode: e.target.value,
+                  })
+                }
+              />
+            </div>
+
+            <div className="form-control mt-6">
+              {account ? (
                 <div
                   onClick={listNFTForSale}
                   className="relative inline-block px-4 py-2  group cursor-pointer"
@@ -220,12 +270,13 @@ const createItem = () => {
                     Upload Project
                   </span>
                 </div>
-              </div>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </div>
       </div>
-
       {/* footer */}
     </div>
   );

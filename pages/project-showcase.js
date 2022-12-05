@@ -62,6 +62,7 @@ const marketplace = () => {
       Marketplace.abi,
       Marketplace.networks[networkId].address
     );
+
     const listings = await marketPlaceContract.methods.getListedNfts().call();
     // Iterate over the listed NFTs and retrieve their metadata
     const nfts = await Promise.all(
@@ -96,7 +97,7 @@ const marketplace = () => {
     <div>
       <div>
         <div className="flex justify-center items-center mt-4 mb-2">
-          <div className="text-4xl font-bold text-center">Project Showcase</div>
+          <div className="text-4xl  text-center">Project Showcase</div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-20">
           {nfts.map((nft, i) => (
@@ -112,14 +113,11 @@ const marketplace = () => {
               />
 
               <div className="p-4 space-y-2">
-                <p className="text-2xl font-semibold truncate">{nft.name}</p>
+                <p className="text-2xl truncate">{nft.name}</p>
 
                 <p className="">
-                  <span className="font-semibold ">Description: </span>
-                  {/* {nft.description} */}
-                  {/* descriptino but limit it to 50 characters */}
-                  {nft.description.length > 100
-                    ? nft.description.substring(0, 100) + '...'
+                  {nft.description.length > 105
+                    ? nft.description.substring(0, 105) + '...'
                     : nft.description}
                 </p>
                 <p>
@@ -131,7 +129,7 @@ const marketplace = () => {
                   {/* <Link href="/[slug]" as={`/${nft.tokenId}`}>
                         <a className="text-blue-500">View</a>
                       </Link> */}
-                  <Link href="/[slug]" as={`/${nft.tokenId}`}>
+                  <Link href="/[slug]" as={`/${nft.name}`}>
                     <a
                       href="#_"
                       className="relative inline-block px-4 py-2  group w-full text-center"

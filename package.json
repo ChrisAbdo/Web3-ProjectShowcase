@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.12",
+    "@next/font": "^13.0.6",
     "@openzeppelin/contracts": "^4.7.3",
     "@truffle/hdwallet-provider": "^2.1.0",
     "axios": "^1.1.2",
@@ -14,6 +15,7 @@
     "dotenv": "^16.0.3",
     "flowbite": "^1.5.3",
     "flowbite-react": "^0.3.2",
+    "framer-motion": "^7.6.18",
     "ipfs-http-client": "56.0.3",
     "next": "latest",
     "prop-types": "^15.8.1",
