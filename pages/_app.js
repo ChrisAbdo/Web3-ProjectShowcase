@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import { useEffect, useState } from 'react';
 import useDarkMode from '../hooks/useDarkMode';
-
+import Script from 'next/script';
 import Navbar from '../components/Navbar';
 
 import Web3 from 'web3';
@@ -54,6 +54,8 @@ function MyApp({ Component, pageProps }) {
   };
   return (
     <>
+      <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+
       <div data-theme={darkMode ? 'lofi' : 'black'} className="min-h-screen">
         <Navbar
           Web3Handler={Web3Handler}
